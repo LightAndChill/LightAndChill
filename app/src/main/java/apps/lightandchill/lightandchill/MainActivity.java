@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), "Manuel");
+        adapter.addFragment(new FragmentOne(), "Manuel");
         adapter.addFragment(new FragmentTwo(), "Audio");
         adapter.addFragment(new FragmentThree(), "Video");
         adapter.addFragment(new FragmentFour(), "Paramètres");
