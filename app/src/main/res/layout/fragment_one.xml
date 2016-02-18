@@ -17,6 +17,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/pickerColor"/>
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/random"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/cbRandom"
+        android:layout_below="@+id/saturationbar" />
+
     <Button
         android:id="@+id/btActivateManual"
         android:layout_width="match_parent"
@@ -26,4 +35,5 @@
         android:layout_marginBottom="5dp"
         android:text="@string/activate"
         android:layout_alignParentBottom="true"/>
+
 </RelativeLayout>

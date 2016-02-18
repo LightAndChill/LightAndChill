@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.larswerkman.holocolorpicker.ColorPicker;
@@ -40,7 +43,8 @@ public class FragmentOne extends Fragment{
         final ColorPicker picker = (ColorPicker) view.findViewById(R.id.pickerColor);
         final SaturationBar saturationBar = (SaturationBar)view.findViewById(R.id.saturationbar);
 
-
+        final Animation slideUp = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_up);
+        final Animation slideDown = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_down);
         /*
             In this listener we need to block the actions raised by the event because the actions
             would be called to many times. In order to accomplish that, we use a bolean that
@@ -75,6 +79,33 @@ public class FragmentOne extends Fragment{
             @Override
             public void onColorSelected(int color) {
                 getColors(color);
+            }
+        });
+
+        final CheckBox cbRandom = (CheckBox) view.findViewById(R.id.cbRandom);
+
+        cbRandom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(cbRandom.isChecked()){
+                    picker.startAnimation(slideUp);
+                    saturationBar.startAnimation(slideUp);
+                    cbRandom.startAnimation(slideUp);
+                    cbRandom.postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            picker.setVisibility(View.GONE);
+                            saturationBar.setVisibility(View.GONE);
+                        }
+                    }, 1500);
+                }else{
+                    picker.setVisibility(View.VISIBLE);
+                    saturationBar.setVisibility(View.VISIBLE);
+                    picker.startAnimation(slideDown);
+                    saturationBar.startAnimation(slideDown);
+                    cbRandom.startAnimation(slideDown);
+                }
             }
         });
 
