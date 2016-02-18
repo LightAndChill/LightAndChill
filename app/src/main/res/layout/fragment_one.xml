@@ -4,12 +4,14 @@
     android:layout_height="match_parent"
     tools:context="info.androidhive.materialtabs.fragments.OneFragment">
 
-    <TextView
+    <com.larswerkman.holocolorpicker.ColorPicker
+        android:id="@+id/pickerColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.larswerkman.holocolorpicker.SaturationBar
+        android:id="@+id/saturationbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="test"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
-
+        android:layout_below="@id/pickerColor"/>
 </RelativeLayout>

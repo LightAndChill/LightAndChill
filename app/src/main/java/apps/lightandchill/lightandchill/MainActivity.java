@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     private int[] tabIcons = {
             R.drawable.ic_action_name,
             R.drawable.ic_mic_white_48dp,
-            R.drawable.ic_video_label_white_48dp,
             R.drawable.ic_settings_white_48dp
     };
 
@@ -46,15 +45,13 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
-        tabLayout.getTabAt(3).setIcon(tabIcons[3]);
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentOne(), "Manuel");
-        adapter.addFragment(new FragmentTwo(), "Audio");
-        adapter.addFragment(new FragmentThree(), "Video");
-        adapter.addFragment(new FragmentFour(), "Paramètres");
+        adapter.addFragment(new FragmentTwo(), "Auto");
+        adapter.addFragment(new FragmentThree(), "Paramètres");
         viewPager.setAdapter(adapter);
     }
 
