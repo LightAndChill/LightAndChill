@@ -4,4 +4,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="activate">Activer ce mode !</string>
+    <string name="activated">Ce mode est actif !</string>
+    <string name="activatedMode">activatedMode</string>
+    <integer name="activatedModeDefault">0</integer>
+    <string name="random">Activer les couleurs aléatoires</string>
 </resources>
