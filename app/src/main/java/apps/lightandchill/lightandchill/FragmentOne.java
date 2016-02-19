@@ -1,5 +1,8 @@
 package apps.lightandchill.lightandchill;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
@@ -23,14 +27,12 @@ import java.util.Timer;
 public class FragmentOne extends Fragment{
     private boolean waitColorState = false;
 
-
     public FragmentOne() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
     }
 
@@ -42,9 +44,11 @@ public class FragmentOne extends Fragment{
 
         final ColorPicker picker = (ColorPicker) view.findViewById(R.id.pickerColor);
         final SaturationBar saturationBar = (SaturationBar)view.findViewById(R.id.saturationbar);
-
+        final CheckBox cbRandom = (CheckBox) view.findViewById(R.id.cbRandom);
+        final Button btActivate = (Button)view.findViewById(R.id.btActivateManual);
         final Animation slideUp = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_up);
         final Animation slideDown = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_down);
+
         /*
             In this listener we need to block the actions raised by the event because the actions
             would be called to many times. In order to accomplish that, we use a bolean that
@@ -82,8 +86,6 @@ public class FragmentOne extends Fragment{
             }
         });
 
-        final CheckBox cbRandom = (CheckBox) view.findViewById(R.id.cbRandom);
-
         cbRandom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +111,17 @@ public class FragmentOne extends Fragment{
             }
         });
 
+        btActivate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(getString(R.string.activatedMode), 0);
+                editor.commit();
+                ((MainActivity)getActivity()).setButtonsActivated();
+            }
+        });
+
         return view;
     }
 
@@ -120,4 +133,5 @@ public class FragmentOne extends Fragment{
                                 + "/" + Integer.toString(blue);
         Toast.makeText(getActivity(), textToDisplay, Toast.LENGTH_SHORT).show();
     }
+
 }
