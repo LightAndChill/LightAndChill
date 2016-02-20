@@ -1,6 +1,5 @@
 package apps.lightandchill.lightandchill;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,12 +16,8 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.larswerkman.holocolorpicker.ColorPicker;
-import com.larswerkman.holocolorpicker.OpacityBar;
-import com.larswerkman.holocolorpicker.SVBar;
 import com.larswerkman.holocolorpicker.SaturationBar;
-import com.larswerkman.holocolorpicker.ValueBar;
 
-import java.util.Timer;
 
 
 public class FragmentOne extends Fragment{
