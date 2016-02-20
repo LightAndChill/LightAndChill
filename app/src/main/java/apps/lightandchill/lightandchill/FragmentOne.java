@@ -2,6 +2,7 @@ package apps.lightandchill.lightandchill;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -48,6 +49,25 @@ public class FragmentOne extends Fragment{
         final Button btActivate = (Button)view.findViewById(R.id.btActivateManual);
         final Animation slideUp = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_up);
         final Animation slideDown = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_down);
+
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        int defaultValue = getResources().getInteger(R.integer.activatedModeDefault);
+        int state = sharedPref.getInt(getString(R.string.activatedMode), defaultValue);
+
+        switch (state) {
+            case 0:
+                btActivate.setEnabled(false);
+                btActivate.setText(R.string.activated);
+                break;
+            case 1:
+                btActivate.setEnabled(true);
+                btActivate.setText(R.string.activate);
+                break;
+            case 2:
+                btActivate.setEnabled(true);
+                btActivate.setText(R.string.activate);
+                break;
+        }
 
         /*
             In this listener we need to block the actions raised by the event because the actions
@@ -118,7 +138,10 @@ public class FragmentOne extends Fragment{
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(getString(R.string.activatedMode), 0);
                 editor.commit();
-                ((MainActivity)getActivity()).setButtonsActivated();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                getActivity().finish();
+                startActivity(intent);
             }
         });
 

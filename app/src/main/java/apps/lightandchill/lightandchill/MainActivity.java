@@ -51,30 +51,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 
-    public void setButtonsActivated() {
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        int defaultValue = getResources().getInteger(R.integer.activatedModeDefault);
-        int state = sharedPref.getInt(getString(R.string.activatedMode), defaultValue);
-
-//        switch (state) {
-//            case 0:
-//                btManual.setEnabled(true);
-//                btMusic.setEnabled(false);
-//                btWeather.setEnabled(false);
-//                break;
-//            case 1:
-//                btManual.setEnabled(false);
-//                btMusic.setEnabled(true);
-//                btWeather.setEnabled(false);
-//                break;
-//            case 2:
-//                btManual.setEnabled(false);
-//                btMusic.setEnabled(false);
-//                btWeather.setEnabled(true);
-//                break;
-//        }
-    }
-
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentOne(), "Manuel");
