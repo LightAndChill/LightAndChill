@@ -53,6 +53,20 @@ public class FragmentOne extends Fragment{
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         int defaultValue = getResources().getInteger(R.integer.activatedModeDefault);
         int state = sharedPref.getInt(getString(R.string.activatedMode), defaultValue);
+        int defaultColor = getResources().getInteger(R.integer.colorSelectedDefault);
+        int colorSaved = sharedPref.getInt(getString(R.string.colorSelected), defaultColor);
+        int defaultRandomChecked = getResources().getInteger(R.integer.cbRandomCheckedDefault);
+        int randomChecked = sharedPref.getInt(getString(R.string.cbRandomChecked), defaultRandomChecked);
+        if(randomChecked == 0){
+            cbRandom.setChecked(false);
+            picker.setVisibility(View.VISIBLE);
+            saturationBar.setVisibility(View.VISIBLE);
+        }else{
+            picker.setVisibility(View.GONE);
+            saturationBar.setVisibility(View.GONE);
+            cbRandom.setChecked(true);
+        }
+
 
         switch (state) {
             case 0:
@@ -96,6 +110,8 @@ public class FragmentOne extends Fragment{
 
         picker.addSaturationBar(saturationBar);
 
+        picker.setColor(colorSaved);
+
         //To get the color
         //picker.getColor();
 
@@ -128,6 +144,10 @@ public class FragmentOne extends Fragment{
                     saturationBar.startAnimation(slideDown);
                     cbRandom.startAnimation(slideDown);
                 }
+                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(getString(R.string.cbRandomChecked), cbRandom.isChecked()?1:0);
+                editor.commit();
             }
         });
 
@@ -154,6 +174,10 @@ public class FragmentOne extends Fragment{
         int blue = Color.blue(intColor);
         String textToDisplay = Integer.toString(red) + "/" + Integer.toString(green)
                                 + "/" + Integer.toString(blue);
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(getString(R.string.colorSelected), intColor);
+        editor.commit();
         Toast.makeText(getActivity(), textToDisplay, Toast.LENGTH_SHORT).show();
     }
 
