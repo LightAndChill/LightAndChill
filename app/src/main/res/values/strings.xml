@@ -10,7 +10,7 @@
     <string name="cbRandomChecked">cbRandomChecked</string>
     <string name="activatedMode">activatedMode</string>
     <integer name="activatedModeDefault">0</integer>
-    <integer name="colorSelectedDefault">0</integer>
+    <integer name="colorSelectedDefault">8453888</integer>
     <integer name="cbRandomCheckedDefault">0</integer>
     <string name="random">Activer les couleurs aléatoires</string>
 </resources>
