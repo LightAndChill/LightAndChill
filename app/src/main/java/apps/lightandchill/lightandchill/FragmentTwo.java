@@ -72,6 +72,7 @@ public class FragmentTwo extends Fragment {
                 editor.putInt(getString(R.string.activatedMode), 1);
                 editor.commit();
                 Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra("Page", 1);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 getActivity().finish();
                 startActivity(intent);
@@ -86,6 +87,7 @@ public class FragmentTwo extends Fragment {
                 editor.putInt(getString(R.string.activatedMode), 2);
                 editor.commit();
                 Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra("Page", 1);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 getActivity().finish();
                 startActivity(intent);

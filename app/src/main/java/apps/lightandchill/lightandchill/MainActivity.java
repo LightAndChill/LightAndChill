@@ -1,5 +1,6 @@
 package apps.lightandchill.lightandchill;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    public static ViewPager viewPager;
     private int[] tabIcons = {
             R.drawable.ic_action_name,
             R.drawable.ic_mic_white_48dp,
@@ -39,9 +40,13 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
+
+        Intent intent = getIntent();
+        Integer pageNumber = intent.getIntExtra("Page",0);
+        viewPager.setCurrentItem(pageNumber);
     }
 
-    private void setupTabIcons() {
+    public void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
