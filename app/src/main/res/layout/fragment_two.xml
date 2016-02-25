@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:id="@+id/lnMusic"
-        android:background="#E0E0E0"
+        android:background="#EEEEEE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -20,7 +20,7 @@
 
             <ImageView
                 android:id="@+id/imMusic"
-                android:src="@drawable/ic_mic_white_48dp"
+                android:src="@drawable/musique"
                 android:layout_width="60dp"
                 android:layout_height="60dp" />
 
@@ -65,7 +65,7 @@
 
     <LinearLayout
         android:id="@+id/lnWeather"
-        android:background="#E0E0E0"
+        android:background="#EEEEEE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:src="@drawable/ic_video_label_white_48dp"
+                android:src="@drawable/soleil"
                 android:id="@+id/imWeather"
                 android:layout_width="60dp"
                 android:layout_height="60dp" />
