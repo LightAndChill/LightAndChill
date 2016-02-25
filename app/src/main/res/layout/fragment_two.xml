@@ -4,24 +4,106 @@
     android:layout_height="match_parent"
     tools:context="info.androidhive.materialtabs.fragments.TwoFragment">
 
-    <Button
-        android:id="@+id/btActivateWeather"
+    <LinearLayout
+        android:id="@+id/lnMusic"
+        android:background="#E0E0E0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        android:text="@string/activate"
-        android:layout_alignParentBottom="true"/>
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btActivateMusic"
+        <RelativeLayout
+            android:id="@+id/lnMusicTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imMusic"
+                android:src="@drawable/ic_mic_white_48dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+            <TextView
+                android:text="Musique"
+                android:layout_toRightOf="@id/imMusic"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:layout_marginLeft="10dp"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/swMusic"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calme"
+            android:id="@+id/rbMusicChill"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="40dp"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PARTY HARD"
+            android:id="@+id/rbMusicHard"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="40dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnWeather"
+        android:background="#E0E0E0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        android:text="@string/activate"
-        android:layout_above="@id/btActivateWeather" />
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:layout_below="@id/lnMusic">
+
+        <RelativeLayout
+            android:id="@+id/lnWeatherTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_video_label_white_48dp"
+                android:id="@+id/imWeather"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+            <TextView
+                android:text="Météo"
+                android:layout_toRightOf="@id/imWeather"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:layout_marginLeft="10dp"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/swWeather"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

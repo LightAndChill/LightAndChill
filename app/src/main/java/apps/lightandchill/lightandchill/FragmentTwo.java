@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 
 /**
@@ -36,8 +38,8 @@ public class FragmentTwo extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_two, container, false);
 
-        final Button btMusic = (Button)view.findViewById(R.id.btActivateMusic);
-        final Button btWeather = (Button)view.findViewById(R.id.btActivateWeather);
+        final Switch swMusic = (Switch)view.findViewById(R.id.swMusic);
+        final Switch swWeather = (Switch)view.findViewById(R.id.swWeather);
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         int defaultValue = getResources().getInteger(R.integer.activatedModeDefault);
@@ -45,52 +47,55 @@ public class FragmentTwo extends Fragment {
 
         switch (state) {
             case 0:
-                btMusic.setEnabled(true);
-                btWeather.setEnabled(true);
-                btMusic.setText(R.string.activate);
-                btWeather.setText(R.string.activate);
+                swMusic.setChecked(false);
+                swWeather.setChecked(false);
                 break;
             case 1:
-                btMusic.setEnabled(false);
-                btWeather.setEnabled(true);
-                btMusic.setText(R.string.activated);
-                btWeather.setText(R.string.activate);
+                swMusic.setChecked(true);
+                swWeather.setChecked(false);
                 break;
             case 2:
-                btMusic.setEnabled(true);
-                btWeather.setEnabled(false);
-                btMusic.setText(R.string.activate);
-                btWeather.setText(R.string.activated);
+                swMusic.setChecked(false);
+                swWeather.setChecked(true);
                 break;
         }
 
-        btMusic.setOnClickListener(new View.OnClickListener() {
+        swMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt(getString(R.string.activatedMode), 1);
-                editor.commit();
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.putExtra("Page", 1);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                getActivity().finish();
-                startActivity(intent);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt(getString(R.string.activatedMode), 1);
+                    editor.commit();
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra("Page", 1);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    getActivity().finish();
+                    startActivity(intent);
+                }else{
+                    swMusic.setChecked(true);
+                }
+
             }
         });
 
-        btWeather.setOnClickListener(new View.OnClickListener() {
+        swWeather.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt(getString(R.string.activatedMode), 2);
-                editor.commit();
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.putExtra("Page", 1);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                getActivity().finish();
-                startActivity(intent);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt(getString(R.string.activatedMode), 2);
+                    editor.commit();
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra("Page", 1);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    getActivity().finish();
+                    startActivity(intent);
+                }else{
+                    swWeather.setChecked(true);
+                }
             }
         });
 
