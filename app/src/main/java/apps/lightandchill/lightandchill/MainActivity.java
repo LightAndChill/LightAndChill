@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
-    public static ViewPager viewPager;
+    private ViewPager viewPager;
     private int[] tabIcons = {
             R.drawable.ic_action_name,
             R.drawable.ic_mic_white_48dp,
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(pageNumber);
     }
 
-    public void setupTabIcons() {
+    private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
