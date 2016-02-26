@@ -18,4 +18,6 @@
     <string name="partyHard">PARTY HARD</string>
     <string name="musique">Musique</string>
     <string name="meteo">Météo</string>
+    <string name="PrefIP">prefIP</string>
+    <string name="IPDefault">Pas d\'IP</string>
 </resources>

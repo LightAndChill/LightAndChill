@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="apps.lightandchill.lightandchill.FragmentThree">
+
+    <EditText
+        android:id="@+id/etIP"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btPreferences"
+        android:text="Sauvegarder"
+        android:layout_toRightOf="@id/etIP"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btShow"
+        android:text="Show"
+        android:layout_toRightOf="@id/btPreferences"/>
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etIP"
+        android:text="Pas d'IP"/>
+
+</RelativeLayout>
