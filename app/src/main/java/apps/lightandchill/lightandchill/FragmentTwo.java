@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 
 
@@ -40,6 +41,7 @@ public class FragmentTwo extends Fragment {
 
         final Switch swMusic = (Switch)view.findViewById(R.id.swMusic);
         final Switch swWeather = (Switch)view.findViewById(R.id.swWeather);
+        final RadioGroup rgMusic = (RadioGroup)view.findViewById(R.id.rgMusic);
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         int defaultValue = getResources().getInteger(R.integer.activatedModeDefault);
@@ -96,6 +98,16 @@ public class FragmentTwo extends Fragment {
                 }else{
                     swWeather.setChecked(true);
                 }
+            }
+        });
+
+        rgMusic.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(getString(R.string.musicMode), checkedId);
+                editor.commit();
             }
         });
 

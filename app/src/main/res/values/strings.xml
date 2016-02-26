@@ -6,6 +6,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="activate">Activer ce mode !</string>
     <string name="activated">Ce mode est actif !</string>
+    <string name="musicMode">musicMode</string>
     <string name="colorSelected">colorSelected</string>
     <string name="cbRandomChecked">cbRandomChecked</string>
     <string name="activatedMode">activatedMode</string>
@@ -15,6 +16,6 @@
     <string name="random">Activer les couleurs aléatoires</string>
     <string name="calme">Calme</string>
     <string name="partyHard">PARTY HARD</string>
-    <string name="musique">PARTY HARD</string>
+    <string name="musique">Musique</string>
     <string name="meteo">Météo</string>
 </resources>

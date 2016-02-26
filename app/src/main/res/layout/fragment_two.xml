@@ -43,6 +43,7 @@
                 android:layout_centerVertical="true" />
         </RelativeLayout>
         <RadioGroup
+            android:id="@+id/rgMusic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -59,8 +60,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/partyHard" />
         </RadioGroup>
-
-
 
     </LinearLayout>
 
