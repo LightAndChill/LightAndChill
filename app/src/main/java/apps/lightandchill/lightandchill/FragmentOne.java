@@ -14,7 +14,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Toast;
+import android.os.StrictMode;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.SaturationBar;
@@ -38,6 +42,10 @@ public class FragmentOne extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_one, container, false);
+
+        // Allow HTTP request on Main Thread (for test purposes)
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         final ColorPicker picker = (ColorPicker) view.findViewById(R.id.pickerColor);
         final SaturationBar saturationBar = (SaturationBar)view.findViewById(R.id.saturationbar);
@@ -175,7 +183,25 @@ public class FragmentOne extends Fragment{
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(getString(R.string.colorSelected), intColor);
         editor.commit();
-        Snackbar.make(this.getView(), textToDisplay, Snackbar.LENGTH_SHORT).show();
+
+
+        try
+        {
+            URL url = new URL("http://10.13.9.53:8080/manual/" + textToDisplay);
+            HttpURLConnection net = (HttpURLConnection)url.openConnection();
+            net.setReadTimeout(10000);
+            net.setConnectTimeout(15000);
+            net.setRequestMethod("GET");
+            net.setDoInput(true);
+            net.connect();
+            InputStream is = net.getInputStream();
+            String result = is.toString();
+            Snackbar.make(this.getView(), result + textToDisplay, Snackbar.LENGTH_SHORT).show();
+        }
+        catch (Exception e)
+        {
+            Snackbar.make(this.getView(), "Fail " + e.toString(), Snackbar.LENGTH_SHORT).show();
+        }
     }
 
 }
