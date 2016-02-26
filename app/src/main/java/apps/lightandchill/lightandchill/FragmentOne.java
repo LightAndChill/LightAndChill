@@ -196,7 +196,7 @@ public class FragmentOne extends Fragment{
             net.connect();
             InputStream is = net.getInputStream();
             String result = is.toString();
-            Snackbar.make(this.getView(), result + textToDisplay, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(this.getView(), textToDisplay, Snackbar.LENGTH_SHORT).show();
         }
         catch (Exception e)
         {
