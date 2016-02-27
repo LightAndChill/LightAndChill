@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -47,6 +46,10 @@ public class FragmentTwo extends Fragment {
         int defaultValue = getResources().getInteger(R.integer.activatedModeDefault);
         int state = sharedPref.getInt(getString(R.string.activatedMode), defaultValue);
 
+
+        /*
+        *   On vérifie dans quel mode de fonctionnement on se trouve
+        **/
         switch (state) {
             case 0:
                 swMusic.setChecked(false);
@@ -61,6 +64,8 @@ public class FragmentTwo extends Fragment {
                 swWeather.setChecked(true);
                 break;
         }
+
+        // TODO : Envoyer à l'arduino la commande lorsque l'on switche sur ces modes
 
         swMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

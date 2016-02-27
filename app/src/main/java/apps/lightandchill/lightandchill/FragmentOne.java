@@ -72,6 +72,9 @@ public class FragmentOne extends Fragment{
         }
 
 
+        /*
+        *   On vérifie dans quel mode de fonctionnement on se trouve
+        **/
         switch (state) {
             case 0:
                 btActivate.setEnabled(false);
@@ -116,9 +119,6 @@ public class FragmentOne extends Fragment{
 
         picker.setColor(colorSaved);
 
-        //To get the color
-        //picker.getColor();
-
         picker.setOnColorSelectedListener(new ColorPicker.OnColorSelectedListener() {
             @Override
             public void onColorSelected(int color) {
@@ -126,6 +126,10 @@ public class FragmentOne extends Fragment{
             }
         });
 
+        /*
+        *   On appelle l'animation pour cacher la roue et on cache le contrôle
+        *   TODO : Refaire l'animation pour qu'elle fonctionne sur toutes les tailles d'écran
+        **/
         cbRandom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,6 +177,10 @@ public class FragmentOne extends Fragment{
         return view;
     }
 
+    /*
+    *   Fonction permettant de récupérer la couleur venant d'être selectionnée sur
+    *   le contrôle prévu à cet effet.
+    **/
     private void getColors(int intColor){
         int red = Color.red(intColor);
         int green = Color.green(intColor);
@@ -201,7 +209,7 @@ public class FragmentOne extends Fragment{
                 net.setDoInput(true);
                 net.connect();
                 InputStream is = net.getInputStream();
-                String result = is.toString();
+                //String result = is.toString();
                 Snackbar.make(this.getView(), textToDisplay, Snackbar.LENGTH_SHORT).show();
             }else{
                 Snackbar.make(this.getView(), getString(R.string.noIP), Snackbar.LENGTH_LONG).show();

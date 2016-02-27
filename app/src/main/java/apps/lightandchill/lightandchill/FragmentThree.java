@@ -36,6 +36,8 @@ public class FragmentThree extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_three, container, false);
 
+        // TODO : Les profils utilisateurs, le choix de couleur de l'interface, la liste des IPs,...
+
         final EditText etIP = (EditText)view.findViewById(R.id.etIP);
         Button btPreferences = (Button)view.findViewById(R.id.btPreferences);
         Button btShow = (Button)view.findViewById(R.id.btShow);
