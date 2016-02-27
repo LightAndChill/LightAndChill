@@ -7,9 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -39,28 +45,30 @@ public class FragmentThree extends Fragment {
         // TODO : Les profils utilisateurs, le choix de couleur de l'interface, la liste des IPs,...
 
         final EditText etIP = (EditText)view.findViewById(R.id.etIP);
-        Button btPreferences = (Button)view.findViewById(R.id.btPreferences);
-        Button btShow = (Button)view.findViewById(R.id.btShow);
-        final TextView tvIP = (TextView)view.findViewById(R.id.tvResult);
+        final Button btPreferences = (Button)view.findViewById(R.id.btPreferences);
+        final ListView lvIPs = (ListView)view.findViewById(R.id.lvIPs);
+
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        final Set<String> listIps = new HashSet<String>(sharedPref.getStringSet(getString(R.string.listIps), new HashSet<String>()));
+
+
+        if(listIps.size() > 0){
+            ArrayList<String> arListIps = new ArrayList<String>(listIps);
+            ArrayAdapter<String> arListIPs = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, arListIps);
+            lvIPs.setAdapter(arListIPs);
+        }
 
         btPreferences.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listIps.add(etIP.getText().toString());
+                ArrayList<String> arListIps = new ArrayList<String>(listIps);
+                ArrayAdapter<String> arListIPs = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, arListIps);
+                lvIPs.setAdapter(arListIPs);
                 SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString(getString(R.string.PrefIP), etIP.getText().toString());
+                editor.putStringSet(getString(R.string.listIps), listIps);
                 editor.commit();
-                tvIP.setText(etIP.getText());
-            }
-        });
-
-        btShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                String defaultValue = getResources().getString(R.string.IPDefault);
-                String state = sharedPref.getString(getString(R.string.PrefIP), defaultValue);
-                tvIP.setText(state);
             }
         });
 

@@ -21,4 +21,7 @@
     <string name="PrefIP">prefIP</string>
     <string name="IPDefault">Pas d\'IP</string>
     <string name="noIP">Vous devez définir une adresse IP dans les paramètres</string>
+    <string name="tvProfile">Profil</string>
+    <string name="ajouter">Ajouter</string>
+    <string name="listIps">listIps</string>
 </resources>

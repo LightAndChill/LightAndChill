@@ -1,31 +1,87 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="apps.lightandchill.lightandchill.FragmentThree">
 
-    <EditText
-        android:id="@+id/etIP"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btPreferences"
-        android:text="Sauvegarder"
-        android:layout_toRightOf="@id/etIP"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btShow"
-        android:text="Show"
-        android:layout_toRightOf="@id/btPreferences"/>
-
-    <TextView
-        android:id="@+id/tvResult"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etIP"
-        android:text="Pas d'IP"/>
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="#EEEEEE"
+        android:layout_weight="1">
 
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/lnAddIPs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/etIP"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/btPreferences"
+                android:layout_weight="2"
+                android:text="@string/ajouter"
+                android:layout_toRightOf="@id/etIP"/>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lvIPs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/lnAddIPs">
+        </ListView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:background="#EEEEEE"
+        android:layout_margin="5dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvProfile"
+            android:textSize="30dp"
+            android:id="@+id/tvProfile"/>
+
+        <LinearLayout
+            android:id="@+id/lnProfiles"
+            android:layout_below="@id/tvProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"></Spinner>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/ajouter"
+                android:layout_weight="2"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>
