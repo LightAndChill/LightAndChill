@@ -187,20 +187,29 @@ public class FragmentOne extends Fragment{
 
         try
         {
-            URL url = new URL("http://10.13.9.53:8080/manual/" + textToDisplay);
-            HttpURLConnection net = (HttpURLConnection)url.openConnection();
-            net.setReadTimeout(10000);
-            net.setConnectTimeout(15000);
-            net.setRequestMethod("GET");
-            net.setDoInput(true);
-            net.connect();
-            InputStream is = net.getInputStream();
-            String result = is.toString();
-            Snackbar.make(this.getView(), textToDisplay, Snackbar.LENGTH_SHORT).show();
+            //On récupère l'adresse IP entrée dans le troisème onglet
+            String defaultValue = null;
+            String strIP = sharedPref.getString(getString(R.string.PrefIP), defaultValue);
+
+            //Si l'IP n'est pas nulle, on tente d'envoyer les infos à l'arduino
+            if(strIP != null){
+                URL url = new URL("http://" + strIP +"/manual/" + textToDisplay);
+                HttpURLConnection net = (HttpURLConnection)url.openConnection();
+                net.setReadTimeout(10000);
+                net.setConnectTimeout(15000);
+                net.setRequestMethod("GET");
+                net.setDoInput(true);
+                net.connect();
+                InputStream is = net.getInputStream();
+                String result = is.toString();
+                Snackbar.make(this.getView(), textToDisplay, Snackbar.LENGTH_SHORT).show();
+            }else{
+                Snackbar.make(this.getView(), getString(R.string.noIP), Snackbar.LENGTH_LONG).show();
+            }
         }
         catch (Exception e)
         {
-            Snackbar.make(this.getView(), "Fail " + e.toString(), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(this.getView(), "Fail " + e.toString(), Snackbar.LENGTH_LONG).show();
         }
     }
 
