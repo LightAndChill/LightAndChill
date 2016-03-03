@@ -41,7 +41,7 @@ public class FragmentOne extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_one, container, false);
+        final View view = inflater.inflate(R.layout.fragment_one, container, false);
 
         // Allow HTTP request on Main Thread (for test purposes)
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -73,6 +73,7 @@ public class FragmentOne extends Fragment{
 
 
         /*
+
         *   On vérifie dans quel mode de fonctionnement on se trouve
         **/
         switch (state) {
@@ -156,6 +157,31 @@ public class FragmentOne extends Fragment{
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(getString(R.string.cbRandomChecked), cbRandom.isChecked()?1:0);
                 editor.commit();
+                try
+                {
+                    //On récupère l'adresse IP entrée dans le troisème onglet
+                    String defaultValue = null;
+                    String strIP = sharedPref.getString(getString(R.string.PrefIP), defaultValue);
+
+                    //Si l'IP n'est pas nulle, on tente d'envoyer les infos à l'arduino
+                    if(strIP != null){
+                        int isRandom = cbRandom.isChecked() ? 1 : 0;
+                        URL url = new URL("http://" + strIP +"/auto/" + isRandom);
+                        HttpURLConnection net = (HttpURLConnection)url.openConnection();
+                        net.setReadTimeout(10000);
+                        net.setConnectTimeout(15000);
+                        net.setRequestMethod("GET");
+                        net.setDoInput(true);
+                        net.connect();
+                        Snackbar.make(view, "Random activé !", Snackbar.LENGTH_SHORT).show();
+                    }else{
+                        Snackbar.make(view, "Echec d'activation du mode random", Snackbar.LENGTH_LONG).show();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Snackbar.make(view, "Fail " + e.toString(), Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 
