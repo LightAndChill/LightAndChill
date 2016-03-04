@@ -36,4 +36,10 @@
         android:text="@string/activate"
         android:layout_alignParentBottom="true"/>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imRainbow"
+        android:src="@drawable/rainbow"/>
+
 </RelativeLayout>

@@ -10,11 +10,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.os.StrictMode;
+import android.widget.ImageView;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -50,9 +52,19 @@ public class FragmentOne extends Fragment{
         final ColorPicker picker = (ColorPicker) view.findViewById(R.id.pickerColor);
         final SaturationBar saturationBar = (SaturationBar)view.findViewById(R.id.saturationbar);
         final CheckBox cbRandom = (CheckBox) view.findViewById(R.id.cbRandom);
+        final ImageView imRainbow = (ImageView)view.findViewById(R.id.imRainbow);
         final Button btActivate = (Button)view.findViewById(R.id.btActivateManual);
         final Animation slideUp = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_up);
         final Animation slideDown = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_down);
+
+        final Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setStartOffset(1000);
+        fadeIn.setDuration(1000);
+
+        final Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setDuration(1000);
+
+        imRainbow.setVisibility(View.GONE);
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         int defaultValue = getResources().getInteger(R.integer.activatedModeDefault);
@@ -138,6 +150,8 @@ public class FragmentOne extends Fragment{
                     picker.startAnimation(slideUp);
                     saturationBar.startAnimation(slideUp);
                     cbRandom.startAnimation(slideUp);
+                    imRainbow.startAnimation(fadeIn);
+                    imRainbow.setVisibility(View.VISIBLE);
                     cbRandom.postDelayed(new Runnable() {
 
                         @Override
@@ -152,6 +166,8 @@ public class FragmentOne extends Fragment{
                     picker.startAnimation(slideDown);
                     saturationBar.startAnimation(slideDown);
                     cbRandom.startAnimation(slideDown);
+                    imRainbow.startAnimation(fadeOut);
+                    imRainbow.setVisibility(View.GONE);
                 }
                 SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
