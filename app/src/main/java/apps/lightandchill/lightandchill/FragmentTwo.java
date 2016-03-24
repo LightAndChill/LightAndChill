@@ -149,9 +149,9 @@ public class FragmentTwo extends Fragment {
                             net.setRequestMethod("GET");
                             net.setDoInput(true);
                             net.connect();
-                            Snackbar.make(view, "Random activé !", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(view, "Musique activée !", Snackbar.LENGTH_SHORT).show();
                         }else{
-                            Snackbar.make(view, "Echec d'activation du mode random", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(view, "Echec d'activation du mode musique", Snackbar.LENGTH_LONG).show();
                         }
                     }
                     catch (Exception e)
@@ -188,9 +188,9 @@ public class FragmentTwo extends Fragment {
                             net.setRequestMethod("GET");
                             net.setDoInput(true);
                             net.connect();
-                            Snackbar.make(view, "Random activé !", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(view, "Météo activée !", Snackbar.LENGTH_SHORT).show();
                         }else{
-                            Snackbar.make(view, "Echec d'activation du mode random", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(view, "Echec d'activation du mode météo", Snackbar.LENGTH_LONG).show();
                         }
                     }
                     catch (Exception e)
