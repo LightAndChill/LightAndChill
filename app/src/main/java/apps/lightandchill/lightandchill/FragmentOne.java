@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.os.StrictMode;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -28,7 +31,9 @@ import com.larswerkman.holocolorpicker.SaturationBar;
 
 
 public class FragmentOne extends Fragment{
+
     private boolean waitColorState = false;
+    protected View view = null;
 
     public FragmentOne() {
         // Required empty public constructor
@@ -40,10 +45,37 @@ public class FragmentOne extends Fragment{
     }
 
     @Override
+    public void setMenuVisibility(final boolean visible) {
+        super.setMenuVisibility(visible);
+        if (visible && view != null) {
+            Button btActivate = (Button)view.findViewById(R.id.btActivateManual);
+
+            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            int defaultValue = getResources().getInteger(R.integer.activatedModeDefault);
+            int state = sharedPref.getInt(getString(R.string.activatedMode), defaultValue);
+
+            switch (state) {
+                case 0:
+                    btActivate.setEnabled(false);
+                    btActivate.setText(R.string.activated);
+                    break;
+                case 1:
+                    btActivate.setEnabled(true);
+                    btActivate.setText(R.string.activate);
+                    break;
+                case 2:
+                    btActivate.setEnabled(true);
+                    btActivate.setText(R.string.activate);
+                    break;
+            }
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_one, container, false);
+        view = inflater.inflate(R.layout.fragment_one, container, false);
 
         // Allow HTTP request on Main Thread (for test purposes)
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -208,11 +240,8 @@ public class FragmentOne extends Fragment{
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(getString(R.string.activatedMode), 0);
                 editor.commit();
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.putExtra("Page", 0);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                getActivity().finish();
-                startActivity(intent);
+                btActivate.setEnabled(false);
+                btActivate.setText(R.string.activated);
             }
         });
 

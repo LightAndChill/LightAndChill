@@ -4,13 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 /**
@@ -23,6 +28,8 @@ import android.widget.Switch;
  */
 public class FragmentTwo extends Fragment {
 
+    protected View view = null;
+
     public FragmentTwo() {
         // Required empty public constructor
     }
@@ -33,18 +40,67 @@ public class FragmentTwo extends Fragment {
     }
 
     @Override
+    public void setMenuVisibility(final boolean visible) {
+        super.setMenuVisibility(visible);
+        if (visible) {
+            final Switch swMusic = (Switch)view.findViewById(R.id.swMusic);
+            final Switch swWeather = (Switch)view.findViewById(R.id.swWeather);
+            final RadioButton rdChill = (RadioButton)view.findViewById(R.id.rbMusicChill);
+            final RadioButton rdParty = (RadioButton)view.findViewById(R.id.rbMusicParty);
+
+            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            int defaultValue = getResources().getInteger(R.integer.activatedModeDefault);
+            int state = sharedPref.getInt(getString(R.string.activatedMode), defaultValue);
+            int musicMode = sharedPref.getInt(getString(R.string.musicMode), defaultValue);
+
+            if(musicMode == 0){
+                rdChill.setChecked(true);
+            }else{
+                rdParty.setChecked(true);
+            }
+
+            /*
+            *   On vérifie dans quel mode de fonctionnement on se trouve
+            **/
+            switch (state) {
+                case 0:
+                    swMusic.setChecked(false);
+                    swWeather.setChecked(false);
+                    break;
+                case 1:
+                    swMusic.setChecked(true);
+                    swWeather.setChecked(false);
+                    break;
+                case 2:
+                    swMusic.setChecked(false);
+                    swWeather.setChecked(true);
+                    break;
+            } //END SWITCH
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_two, container, false);
+        view = inflater.inflate(R.layout.fragment_two, container, false);
 
         final Switch swMusic = (Switch)view.findViewById(R.id.swMusic);
         final Switch swWeather = (Switch)view.findViewById(R.id.swWeather);
         final RadioGroup rgMusic = (RadioGroup)view.findViewById(R.id.rgMusic);
+        final RadioButton rdChill = (RadioButton)view.findViewById(R.id.rbMusicChill);
+        final RadioButton rdParty = (RadioButton)view.findViewById(R.id.rbMusicParty);
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         int defaultValue = getResources().getInteger(R.integer.activatedModeDefault);
         int state = sharedPref.getInt(getString(R.string.activatedMode), defaultValue);
+        int musicMode = sharedPref.getInt(getString(R.string.musicMode), defaultValue);
+
+        if(musicMode == 0){
+            rdChill.setChecked(true);
+        }else{
+            rdParty.setChecked(true);
+        }
 
 
         /*
@@ -75,13 +131,33 @@ public class FragmentTwo extends Fragment {
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putInt(getString(R.string.activatedMode), 1);
                     editor.commit();
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.putExtra("Page", 1);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    getActivity().finish();
-                    startActivity(intent);
-                }else{
-                    swMusic.setChecked(true);
+                    swWeather.setChecked(false);
+
+                    try
+                    {
+                        //On récupère l'adresse IP entrée dans le troisème onglet
+                        String defaultValue = null;
+                        String strIP = sharedPref.getString(getString(R.string.PrefIP), defaultValue);
+
+                        //Si l'IP n'est pas nulle, on tente d'envoyer les infos à l'arduino
+                        if(strIP != null){
+                            int musicMode = sharedPref.getInt(getString(R.string.musicMode), 0);
+                            URL url = new URL("http://" + strIP +"/music/" + musicMode);
+                            HttpURLConnection net = (HttpURLConnection)url.openConnection();
+                            net.setReadTimeout(10000);
+                            net.setConnectTimeout(15000);
+                            net.setRequestMethod("GET");
+                            net.setDoInput(true);
+                            net.connect();
+                            Snackbar.make(view, "Random activé !", Snackbar.LENGTH_SHORT).show();
+                        }else{
+                            Snackbar.make(view, "Echec d'activation du mode random", Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Snackbar.make(view, "Fail " + e.toString(), Snackbar.LENGTH_LONG).show();
+                    }
                 }
 
             }
@@ -95,13 +171,32 @@ public class FragmentTwo extends Fragment {
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putInt(getString(R.string.activatedMode), 2);
                     editor.commit();
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.putExtra("Page", 1);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    getActivity().finish();
-                    startActivity(intent);
-                }else{
-                    swWeather.setChecked(true);
+                    swMusic.setChecked(false);
+
+                    try
+                    {
+                        //On récupère l'adresse IP entrée dans le troisème onglet
+                        String defaultValue = null;
+                        String strIP = sharedPref.getString(getString(R.string.PrefIP), defaultValue);
+
+                        //Si l'IP n'est pas nulle, on tente d'envoyer les infos à l'arduino
+                        if(strIP != null){
+                            URL url = new URL("http://" + strIP +"/weather/");
+                            HttpURLConnection net = (HttpURLConnection)url.openConnection();
+                            net.setReadTimeout(10000);
+                            net.setConnectTimeout(15000);
+                            net.setRequestMethod("GET");
+                            net.setDoInput(true);
+                            net.connect();
+                            Snackbar.make(view, "Random activé !", Snackbar.LENGTH_SHORT).show();
+                        }else{
+                            Snackbar.make(view, "Echec d'activation du mode random", Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Snackbar.make(view, "Fail " + e.toString(), Snackbar.LENGTH_LONG).show();
+                    }
                 }
             }
         });
@@ -111,7 +206,12 @@ public class FragmentTwo extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt(getString(R.string.musicMode), checkedId);
+
+                int radioButtonID = rgMusic.getCheckedRadioButtonId();
+                View radioButton = rgMusic.findViewById(radioButtonID);
+                int indexSelected = rgMusic.indexOfChild(radioButton);
+
+                editor.putInt(getString(R.string.musicMode), indexSelected);
                 editor.commit();
             }
         });

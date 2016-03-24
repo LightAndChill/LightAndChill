@@ -58,7 +58,8 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/partyHard" />
+                android:text="@string/partyHard"
+                android:id="@+id/rbMusicParty"/>
         </RadioGroup>
 
     </LinearLayout>
