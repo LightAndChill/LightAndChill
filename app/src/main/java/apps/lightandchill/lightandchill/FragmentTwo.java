@@ -45,6 +45,7 @@ public class FragmentTwo extends Fragment {
         if (visible) {
             final Switch swMusic = (Switch)view.findViewById(R.id.swMusic);
             final Switch swWeather = (Switch)view.findViewById(R.id.swWeather);
+            final Switch swScenar = (Switch)view.findViewById(R.id.swScenar);
             final RadioButton rdChill = (RadioButton)view.findViewById(R.id.rbMusicChill);
             final RadioButton rdParty = (RadioButton)view.findViewById(R.id.rbMusicParty);
 
@@ -66,14 +67,22 @@ public class FragmentTwo extends Fragment {
                 case 0:
                     swMusic.setChecked(false);
                     swWeather.setChecked(false);
+                    swScenar.setChecked(false);
                     break;
                 case 1:
                     swMusic.setChecked(true);
                     swWeather.setChecked(false);
+                    swScenar.setChecked(false);
                     break;
                 case 2:
                     swMusic.setChecked(false);
                     swWeather.setChecked(true);
+                    swScenar.setChecked(false);
+                    break;
+                case 3:
+                    swMusic.setChecked(false);
+                    swWeather.setChecked(false);
+                    swScenar.setChecked(true);
                     break;
             } //END SWITCH
         }
@@ -87,6 +96,7 @@ public class FragmentTwo extends Fragment {
 
         final Switch swMusic = (Switch)view.findViewById(R.id.swMusic);
         final Switch swWeather = (Switch)view.findViewById(R.id.swWeather);
+        final Switch swScenar = (Switch)view.findViewById(R.id.swScenar);
         final RadioGroup rgMusic = (RadioGroup)view.findViewById(R.id.rgMusic);
         final RadioButton rdChill = (RadioButton)view.findViewById(R.id.rbMusicChill);
         final RadioButton rdParty = (RadioButton)view.findViewById(R.id.rbMusicParty);
@@ -110,14 +120,22 @@ public class FragmentTwo extends Fragment {
             case 0:
                 swMusic.setChecked(false);
                 swWeather.setChecked(false);
+                swScenar.setChecked(false);
                 break;
             case 1:
                 swMusic.setChecked(true);
                 swWeather.setChecked(false);
+                swScenar.setChecked(false);
                 break;
             case 2:
                 swMusic.setChecked(false);
                 swWeather.setChecked(true);
+                swScenar.setChecked(false);
+                break;
+            case 3:
+                swMusic.setChecked(false);
+                swWeather.setChecked(false);
+                swScenar.setChecked(true);
                 break;
         }
 
@@ -132,6 +150,7 @@ public class FragmentTwo extends Fragment {
                     editor.putInt(getString(R.string.activatedMode), 1);
                     editor.commit();
                     swWeather.setChecked(false);
+                    swScenar.setChecked(false);
 
                     try
                     {
@@ -172,6 +191,7 @@ public class FragmentTwo extends Fragment {
                     editor.putInt(getString(R.string.activatedMode), 2);
                     editor.commit();
                     swMusic.setChecked(false);
+                    swScenar.setChecked(false);
 
                     try
                     {
@@ -198,6 +218,22 @@ public class FragmentTwo extends Fragment {
                         Snackbar.make(view, "Fail " + e.toString(), Snackbar.LENGTH_LONG).show();
                     }
                 }
+            }
+        });
+
+        swScenar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt(getString(R.string.activatedMode), 3);
+                    editor.commit();
+                    swWeather.setChecked(false);
+                    swMusic.setChecked(false);
+
+                }
+
             }
         });
 

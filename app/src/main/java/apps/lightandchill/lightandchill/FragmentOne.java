@@ -60,11 +60,7 @@ public class FragmentOne extends Fragment{
                     btActivate.setEnabled(false);
                     btActivate.setText(R.string.activated);
                     break;
-                case 1:
-                    btActivate.setEnabled(true);
-                    btActivate.setText(R.string.activate);
-                    break;
-                case 2:
+                default:
                     btActivate.setEnabled(true);
                     btActivate.setText(R.string.activate);
                     break;
@@ -126,11 +122,7 @@ public class FragmentOne extends Fragment{
                 btActivate.setEnabled(false);
                 btActivate.setText(R.string.activated);
                 break;
-            case 1:
-                btActivate.setEnabled(true);
-                btActivate.setText(R.string.activate);
-                break;
-            case 2:
+             default:
                 btActivate.setEnabled(true);
                 btActivate.setText(R.string.activate);
                 break;
