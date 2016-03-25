@@ -34,6 +34,7 @@ public class FragmentOne extends Fragment{
 
     private boolean waitColorState = false;
     protected View view = null;
+    protected int state = 0;
 
     public FragmentOne() {
         // Required empty public constructor
@@ -52,7 +53,7 @@ public class FragmentOne extends Fragment{
 
             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
             int defaultValue = getResources().getInteger(R.integer.activatedModeDefault);
-            int state = sharedPref.getInt(getString(R.string.activatedMode), defaultValue);
+            state = sharedPref.getInt(getString(R.string.activatedMode), defaultValue);
 
             switch (state) {
                 case 0:
@@ -100,7 +101,7 @@ public class FragmentOne extends Fragment{
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         int defaultValue = getResources().getInteger(R.integer.activatedModeDefault);
-        int state = sharedPref.getInt(getString(R.string.activatedMode), defaultValue);
+        state = sharedPref.getInt(getString(R.string.activatedMode), defaultValue);
         int defaultColor = getResources().getInteger(R.integer.colorSelectedDefault);
         int colorSaved = sharedPref.getInt(getString(R.string.colorSelected), defaultColor);
         int defaultRandomChecked = getResources().getInteger(R.integer.cbRandomCheckedDefault);
@@ -144,7 +145,7 @@ public class FragmentOne extends Fragment{
         saturationBar.setOnSaturationChangedListener(new SaturationBar.OnSaturationChangedListener() {
             @Override
             public void onSaturationChanged(final int saturation) {
-                if (!waitColorState) {
+                if (!waitColorState && state == 0) {
                     waitColorState = true;
                     getColors(saturation);
                     saturationBar.postDelayed(new Runnable() {
@@ -155,7 +156,8 @@ public class FragmentOne extends Fragment{
                             waitColorState = false;
                         }
                     }, 1000);
-
+                }else if(!waitColorState && state != 0){
+                    Snackbar.make(view, "Le mode manuel n'est pas actif !", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
@@ -167,7 +169,12 @@ public class FragmentOne extends Fragment{
         picker.setOnColorSelectedListener(new ColorPicker.OnColorSelectedListener() {
             @Override
             public void onColorSelected(int color) {
-                getColors(color);
+                if(state == 0){
+                    getColors(color);
+                }else{
+                    Snackbar.make(view, "Le mode manuel n'est pas actif !", Snackbar.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -178,57 +185,59 @@ public class FragmentOne extends Fragment{
         cbRandom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(cbRandom.isChecked()){
-                    picker.startAnimation(slideUp);
-                    saturationBar.startAnimation(slideUp);
-                    cbRandom.startAnimation(slideUp);
-                    imRainbow.startAnimation(fadeIn);
-                    imRainbow.setVisibility(View.VISIBLE);
-                    cbRandom.postDelayed(new Runnable() {
+                if(state == 0) {
+                    if (cbRandom.isChecked()) {
+                        picker.startAnimation(slideUp);
+                        saturationBar.startAnimation(slideUp);
+                        cbRandom.startAnimation(slideUp);
+                        imRainbow.startAnimation(fadeIn);
+                        imRainbow.setVisibility(View.VISIBLE);
+                        cbRandom.postDelayed(new Runnable() {
 
-                        @Override
-                        public void run() {
-                            picker.setVisibility(View.GONE);
-                            saturationBar.setVisibility(View.GONE);
-                        }
-                    }, 1500);
-                }else{
-                    picker.setVisibility(View.VISIBLE);
-                    saturationBar.setVisibility(View.VISIBLE);
-                    picker.startAnimation(slideDown);
-                    saturationBar.startAnimation(slideDown);
-                    cbRandom.startAnimation(slideDown);
-                    imRainbow.startAnimation(fadeOut);
-                    imRainbow.setVisibility(View.GONE);
-                }
-                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt(getString(R.string.cbRandomChecked), cbRandom.isChecked()?1:0);
-                editor.commit();
-                try
-                {
-                    //On récupère l'adresse IP entrée dans le troisème onglet
-                    String defaultValue = null;
-                    String strIP = sharedPref.getString(getString(R.string.PrefIP), defaultValue);
-
-                    //Si l'IP n'est pas nulle, on tente d'envoyer les infos à l'arduino
-                    if(strIP != null){
-                        int isRandom = cbRandom.isChecked() ? 1 : 0;
-                        URL url = new URL("http://" + strIP +"/auto/" + isRandom);
-                        HttpURLConnection net = (HttpURLConnection)url.openConnection();
-                        net.setReadTimeout(10000);
-                        net.setConnectTimeout(15000);
-                        net.setRequestMethod("GET");
-                        net.setDoInput(true);
-                        net.connect();
-                        Snackbar.make(view, "Random activé !", Snackbar.LENGTH_SHORT).show();
-                    }else{
-                        Snackbar.make(view, "Echec d'activation du mode random", Snackbar.LENGTH_LONG).show();
+                            @Override
+                            public void run() {
+                                picker.setVisibility(View.GONE);
+                                saturationBar.setVisibility(View.GONE);
+                            }
+                        }, 1500);
+                    } else {
+                        picker.setVisibility(View.VISIBLE);
+                        saturationBar.setVisibility(View.VISIBLE);
+                        picker.startAnimation(slideDown);
+                        saturationBar.startAnimation(slideDown);
+                        cbRandom.startAnimation(slideDown);
+                        imRainbow.startAnimation(fadeOut);
+                        imRainbow.setVisibility(View.GONE);
                     }
-                }
-                catch (Exception e)
-                {
-                    Snackbar.make(view, "Fail " + e.toString(), Snackbar.LENGTH_LONG).show();
+                    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt(getString(R.string.cbRandomChecked), cbRandom.isChecked() ? 1 : 0);
+                    editor.commit();
+                    try {
+                        //On récupère l'adresse IP entrée dans le troisème onglet
+                        String defaultValue = null;
+                        String strIP = sharedPref.getString(getString(R.string.PrefIP), defaultValue);
+
+                        //Si l'IP n'est pas nulle, on tente d'envoyer les infos à l'arduino
+                        if (strIP != null) {
+                            int isRandom = cbRandom.isChecked() ? 1 : 0;
+                            URL url = new URL("http://" + strIP + "/auto/" + isRandom);
+                            HttpURLConnection net = (HttpURLConnection) url.openConnection();
+                            net.setReadTimeout(10000);
+                            net.setConnectTimeout(15000);
+                            net.setRequestMethod("GET");
+                            net.setDoInput(true);
+                            net.connect();
+                            Snackbar.make(view, "Random activé !", Snackbar.LENGTH_SHORT).show();
+                        } else {
+                            Snackbar.make(view, "Echec d'activation du mode random", Snackbar.LENGTH_LONG).show();
+                        }
+                    } catch (Exception e) {
+                        Snackbar.make(view, "Fail " + e.toString(), Snackbar.LENGTH_LONG).show();
+                    }
+                }else{
+                    cbRandom.setChecked(false);
+                    Snackbar.make(view, "Le mode manuel n'est pas actif !", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
@@ -240,6 +249,7 @@ public class FragmentOne extends Fragment{
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(getString(R.string.activatedMode), 0);
                 editor.commit();
+                state = 0;
                 btActivate.setEnabled(false);
                 btActivate.setText(R.string.activated);
             }
