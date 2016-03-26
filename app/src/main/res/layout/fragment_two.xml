@@ -123,7 +123,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:src="@drawable/Scenario"
+                android:src="@drawable/scenario"
                 android:id="@+id/imScenar"
                 android:layout_width="60dp"
                 android:layout_height="60dp" />
